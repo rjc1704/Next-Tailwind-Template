@@ -15,5 +15,5 @@ function MyApp({ Component, pageProps }) {
     }, []);
     return <>{!loading ? <Component {...pageProps} /> : <Preloader />}</>;
 }
-
+//
 export default MyApp;
