@@ -4,16 +4,22 @@ import '../public/assets/css/tailwind-built.css';
 import '../public/assets/css/global.css';
 import Preloader from '../components/elements/Preloader';
 import 'swiper/css';
-
-function MyApp({ Component, pageProps }) {
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-    return <>{!loading ? <Component {...pageProps} /> : <Preloader />}</>;
+import { wrapper } from 'store';
+import { Provider } from 'react-redux';
+function MyApp({ Component, pageProps, ...rest }) {
+    const { store } = wrapper.useWrappedStore(rest);
+    // const [loading, setLoading] = useState(false);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //     }, 2000);
+    // }, []);
+    return (
+        <Provider store={store}>
+            <Component {...pageProps} />
+        </Provider>
+    );
 }
 //
-export default MyApp;
+export default wrapper.withRedux(MyApp);
